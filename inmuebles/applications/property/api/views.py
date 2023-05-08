@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 
 from applications.property.models import Property, Company, Comment
@@ -85,6 +85,7 @@ class PropertyDetail(APIView):
 class CommentListCreateApiView(ListCreateAPIView):
     """ Lista y Crea Comentarios de un propiedad """
     serializer_class = CommentModelSerializer
+    permission_classes = [IsAuthenticated]
         
     def get_queryset(self):
         """ Filtra los comentarios por la propiedad """       

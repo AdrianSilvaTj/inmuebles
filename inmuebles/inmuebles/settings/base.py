@@ -34,19 +34,24 @@ SECRET_KEY = get_secret('SECRET_KEY')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# CONFIGURACIÓN DE AUTENTICACIÓN Y AUTORIZACION DE REST FRAMEWORK
+
+# Habilitamos que: herramientas de terceros(Angular, React, etc.) puedan realizar autencticaciones en Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+      'rest_framework.authentication.BasicAuthentication',        
+    ]
+    
+}
+
 # Configuración de Rest_Framework para que solo los usuarios autenticados puedan tener
 # acceso a nuestras apis. Desde Aqui aplica a todas las apps. Para hacerlo de manera específica
 # para una vista, url, etc. Se debe especificar en views.py
-
 # REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#       'rest_framework.permissions.IsAuthenticated',
-#     ),
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #   'rest_framework.authentication.TokenAuthentication',
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #   'rest_framework.permissions.IsAuthenticated',
     # ),
-#}
-
+# }
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
