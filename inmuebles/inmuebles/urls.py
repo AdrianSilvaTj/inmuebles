@@ -20,6 +20,7 @@ from django.urls import include, path, re_path
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('api/property_app/', include('applications.property.api.urls')),
+    re_path('api/acount/', include('applications.user_app.api.urls')),
     # Se utiliza para poder logearse en rest_framework
     path('api-auth', include('rest_framework.urls')),
 ]

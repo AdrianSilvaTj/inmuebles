@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.db.models import Avg, Count
+from applications.user_app.models import Account
 
 
 class Company(models.Model):
@@ -44,7 +44,7 @@ class Property(models.Model):
 
 class Comment (models.Model):
     '''Model definition para comentarios.'''
-    comment_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment_user = models.ForeignKey(Account, on_delete=models.CASCADE)
     calification = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = models.TextField('Comentario', max_length=200, null=True, blank=True)
     active = models.BooleanField(default=True)

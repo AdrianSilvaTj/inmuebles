@@ -27,6 +27,8 @@ def value_length(value):
 class PropertyModelSerializer(serializers.ModelSerializer):
     address_length = serializers.SerializerMethodField()
     comments_list = CommentModelSerializer(many = True, read_only = True)
+    company_name = serializers.CharField(source='company.name')
+    
     class Meta:
         model = Property
         fields = '__all__'

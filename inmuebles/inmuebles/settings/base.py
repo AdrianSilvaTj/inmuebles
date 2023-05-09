@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from datetime import timedelta
 import os
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
@@ -39,9 +40,35 @@ SECRET_KEY = get_secret('SECRET_KEY')
 # Habilitamos que: herramientas de terceros(Angular, React, etc.) puedan realizar autencticaciones en Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-      'rest_framework.authentication.BasicAuthentication',        
-    ]
-    
+        #'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',        
+    ],
+    # Se utiliza para restringir el acceso a los usuarios segun la cantidad de peticiones por dia
+    # aplica para todos los endpoints
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle',
+    # ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/day',
+        'user': '10/day',
+        # personalizar
+        'comment-create': '2/day',
+        'comment-list': '8/day',
+        'comment-detail' : '2/day',
+    },
+    # Devuelve todo en formato JSON, sin la visualizacion de Rest Framework
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+    # 'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE':100,
+}
+# Para que genere un nuevo Token por cada Token vencido, ya vencen cada 5 mins
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKENS': True,
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=365),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=365),
 }
 
 # Configuración de Rest_Framework para que solo los usuarios autenticados puedan tener
@@ -72,10 +99,14 @@ DJANGO_APPS = [
 
 THIRD_PART_APPS =[
     'rest_framework',
+    'rest_framework.authtoken',
+    # hacer peticiones con filtros automatizados
+    'django_filters',    
 ]
 
 LOCAL_APPS = [
-    'applications.property'
+    'applications.property',
+    'applications.user_app',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PART_APPS + LOCAL_APPS
@@ -109,6 +140,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'inmuebles.wsgi.application'
+
+AUTH_USER_MODEL = 'user_app.Account'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

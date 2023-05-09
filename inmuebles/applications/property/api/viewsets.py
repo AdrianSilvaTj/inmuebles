@@ -9,11 +9,16 @@ from .serializers import (
     PropertyModelSerializer, PropertyHyLinkSerializer , CompanyModelSerializer,
     CompanyHyLinkSerializer, CommentModelSerializer
 )
-from .permissions import AdminOrReadOnlyPermission
+from .permissions import IsAdminOrReadOnly
 
 class CompanyModelViewset(viewsets.ModelViewSet):
     queryset = Company.objects.all()
-    serializer_class = CompanyModelSerializer
+    #serializer_class = CompanyModelSerializer
     # Se le aplica los permisos definidos en AdminOrReadOnlyPermission
-    permission_classes = [AdminOrReadOnlyPermission]
+    permission_classes = [IsAdminOrReadOnly]
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return CompanyHyLinkSerializer        
+        return CompanyModelSerializer
     

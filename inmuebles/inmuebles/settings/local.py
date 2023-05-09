@@ -9,7 +9,7 @@ DATABASES = {
         'NAME': get_secret('DB_NAME'),
         'USER': get_secret('USER'),
         'PASSWORD': get_secret('PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': get_secret('HOST'),
         'PORT': '5432',
     }
 }
