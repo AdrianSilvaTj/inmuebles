@@ -17,28 +17,18 @@ from django.core.exceptions import ImproperlyConfigured
 import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# PARA PRODUCCION
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# get secret.json
-with open("secret.json") as f:
-    secret = json.loads(f.read())
-
-def get_secret(secret_name, secrets=secret):
-    try:
-        return secrets[secret_name]
-    except:
-        msg = "la variable %s no existe" % secret_name
-        raise ImproperlyConfigured(msg)
-
-SECRET_KEY = get_secret('SECRET_KEY')
+SECRET_KEY = "django-insecure-n%2_ld3ltz^$y)82en!v!kd=&pl+)nocbva@9gdcmf@(i+xw0q"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+# PARA PRODUCCION **************************
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # Database
@@ -87,6 +77,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # PARA PRODUCCION **********************************
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'inmuebles.urls'
@@ -113,6 +105,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+# PARA PRODUCCION **********************************
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -125,7 +120,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # EMAIL_HOST_PASSWORD = get_secret('PASS_EMAIL')
 # EMAIL_PORT = 587
 
-#======================================================================================================================
 
 
 WSGI_APPLICATION = 'inmuebles.wsgi.application'
@@ -218,6 +212,8 @@ SIMPLE_JWT = {
     # ),
 # }
 
+
+#======================================================================================================================
 # IMPORTAMOS LAS OPCIONES LOCALES. EN PRODUCCION NO SUBIMOS LOCAL_SETTING NI SECRET.JSON
 try:
     from.local_settings import *
