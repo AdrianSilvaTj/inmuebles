@@ -37,8 +37,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'inmueblesdb',
-        'USER': 'postgres',
-        'PASSWORD': '12345678',
+        'USER': 'adrian',
+        'PASSWORD': 'adrian1234',
         'HOST': 'localhost',
         'PORT': '5432',
     }
