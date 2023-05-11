@@ -1,21 +1,21 @@
-upstream empleado_app {
-  server unix:/webapps/envEmpleado/run/gunicorn.sock fail_timeout=0;
+upstream inmuebles_app {
+  server unix:/webapps/envInmuebles/run/gunicorn.sock fail_timeout=0;
 }
  
 server {
  
     listen   80;
-    server_name 137.184.200.152;
+    server_name 159.223.173.51;
  
-    access_log /webapps/envEmpleado/logs/nginx-access.log;
-    error_log /webapps/envEmpleado/logs/nginx-error.log;
+    access_log /webapps/envInmuebles/logs/nginx-access.log;
+    error_log /webapps/envInmuebles/logs/nginx-error.log;
  
     location /static/ {
-        alias   /webapps/envEmpleado/ProyectoEmpleado_Udemy/static/;
+        alias   /webapps/envInmuebles/inmuebles/inmuebles/staticfiles/;
     }
     
     location /media/ {
-        alias   /webapps/envEmpleado/ProyectoEmpleado_Udemy/media/;
+        alias   /webapps/envInmuebles/inmuebles/inmuebles/mediafiles/;
     }
  
     location / {
@@ -24,7 +24,7 @@ server {
         proxy_redirect off;
 
         if (!-f $request_filename) {
-            proxy_pass http://empleado_app;
+            proxy_pass http://inmuebles_app;
             break;
         }
     }
