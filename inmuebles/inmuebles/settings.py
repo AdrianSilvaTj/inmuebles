@@ -36,12 +36,15 @@ ALLOWED_HOSTS = ['*']
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASE_URL='postgres://inmuebles:ZYJDluQplYVDu5h@inmuebles-db.flycast:5432/inmuebles?sslmode=disable'
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + os.path.join('db.sqlite3')
-    )  
-    
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'inmueblesdb',
+        'USER': 'adrian',
+        'PASSWORD': 'adrian1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 # Application definition
