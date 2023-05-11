@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from datetime import timedelta
 import os
+import dj_database_url
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 import json
@@ -31,17 +32,16 @@ SECRET_KEY = "django-insecure-n%2_ld3ltz^$y)82en!v!kd=&pl+)nocbva@9gdcmf@(i+xw0q
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+DATABASE_URL='postgres://inmuebles:ZYJDluQplYVDu5h@inmuebles-db.flycast:5432/inmuebles?sslmode=disable'
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'inmueblesdb',
-        'USER': 'adrian',
-        'PASSWORD': 'adrian1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + os.path.join('db.sqlite3')
+    )  
+    
 }
 
 # Application definition
@@ -110,7 +110,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 #
 
 # EMAIL SETTINGS
