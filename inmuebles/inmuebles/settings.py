@@ -58,11 +58,13 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-THIRD_PART_APPS =[
+THIRD_PARTY_APPS =[
     'rest_framework',
     'rest_framework.authtoken',
     # hacer peticiones con filtros automatizados
-    'django_filters',    
+    'django_filters', 
+    # cors, para trabajar los permisos de petición
+    'corsheaders',   
 ]
 
 LOCAL_APPS = [
@@ -70,7 +72,7 @@ LOCAL_APPS = [
     'applications.user_app',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PART_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,6 +84,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # PARA PRODUCCION **********************************
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'inmuebles.urls'
@@ -114,7 +117,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
-#
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # EMAIL SETTINGS
 # EMAIL_USE_TLS = True

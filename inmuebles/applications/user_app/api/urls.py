@@ -12,6 +12,7 @@ urlpatterns = [
     # registra un usuario
     path('register/',views.register, name='register'),
     path('logout/',views.logout, name='logout'), 
+    path('session/',views.session_view, name='session'), 
     # para trabajar con JWT  
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), 
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), 
