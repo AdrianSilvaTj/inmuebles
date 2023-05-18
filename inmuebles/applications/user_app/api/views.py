@@ -30,6 +30,7 @@ def login(request):
             data['last_name'] = account.last_name
             data['phone_number'] = account.phone_number
             refresh = RefreshToken.for_user(account)
+            ########
             data['token'] = {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token)
