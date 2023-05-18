@@ -52,7 +52,7 @@ def register(request):
         data['last_name'] = account.last_name
         data['phone_number'] = account.phone_number
         
-        #
+        # *************************************************************
         # Asignar token 
         # token = Token.objects.get(user=acount).key
         # data['token'] = token
